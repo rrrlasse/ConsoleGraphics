@@ -9,7 +9,7 @@ namespace cg
 	{
 	public:
 		inline RenderSurface(Vec2u size);
-		inline RenderSurface(size_t width, size_t height);
+		inline RenderSurface(int width, int height);
 
 		[[nodiscard]] inline auto getSize() const noexcept -> Vec2u;
 
@@ -44,9 +44,10 @@ namespace cg
 		RenderSurface(size.x, size.y)
 	{}
 
-	inline RenderSurface::RenderSurface(size_t width, size_t height) :
-		m_surfaceSize{ width, height },
-		m_surface{ width * height, makeCharInfo(' ', Color::Black, Color::Gray) }
+	inline RenderSurface::RenderSurface(int width, int height) :
+		m_surfaceSize{ static_cast<decltype(m_surfaceSize.x)>(width),
+		static_cast<decltype(m_surfaceSize.x)>(height) },
+		m_surface{ static_cast<size_t>(width * height), makeCharInfo(' ', Color::Black, Color::Gray) }
 	{}
 
 	inline auto RenderSurface::getSize() const noexcept -> Vec2u
